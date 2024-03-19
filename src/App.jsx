@@ -1,30 +1,27 @@
 import { useState } from 'react';
 
-const PasswordGenerator = () => {
+function App() {
   // State variables for password, password length, entropy, password strength, and message display
   const [password, setPassword] = useState('');
-  const [passwordLength, setPasswordLength] = useState(20); // Default password length
-  const [entropy, setEntropy] = useState(0); // Default entropy
-  const [passwordStrength, setPasswordStrength] = useState('weak'); // Default password strength
-  const [showMessage, setShowMessage] = useState(false); // Flag to show password copied message
+  const [passwordLength, setPasswordLength] = useState(20);
+  const [entropy, setEntropy] = useState(0);
+  const [passwordStrength, setPasswordStrength] = useState('weak');
+  const [showMessage, setShowMessage] = useState(false);
 
   // Function to handle changes in password length input
   const handleChange = (event) => {
-    const length = parseInt(event.target.value);
+    let length = parseInt(event.target.value);
+    // Ensure password length is within bounds
+    length = Math.min(Math.max(length, 20), 100);
     setPasswordLength(length);
-    calculateEntropy(length); // Recalculate entropy when password length changes
   };
 
   // Function to calculate password entropy and determine password strength
   const calculateEntropy = (length) => {
-    const charsetSize = 94; // Expanded charset size including uppercase, lowercase, digits, and special characters
-    const entropyBits = Math.log2(Math.pow(charsetSize, length)); // Calculate entropy in bits
-    setEntropy(entropyBits.toFixed(2)); // Update entropy state
-    updatePasswordStrength(entropyBits); // Update password strength based on entropy
-  };
-
-  // Function to update password strength based on entropy
-  const updatePasswordStrength = (entropyBits) => {
+    const charsetSize = 72;
+    const entropyBits = Math.log2(Math.pow(charsetSize, length));
+    setEntropy(entropyBits.toFixed(2));
+    // Update password strength based on entropy
     if (entropyBits < 50) {
       setPasswordStrength('weak');
     } else if (entropyBits < 80) {
@@ -35,24 +32,20 @@ const PasswordGenerator = () => {
   };
 
   // Function to generate a random password
-  // Function to generate a random password
   const generatePassword = () => {
-    const length = passwordLength; // Get the desired password length
-    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+'; // Character set for password generation
+    const length = passwordLength;
+    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+';
     const randomBytes = new Uint8Array(length);
-    window.crypto.getRandomValues(randomBytes); // Generate random bytes using crypto API
+    window.crypto.getRandomValues(randomBytes);
 
     let generatedPassword = '';
-    // Loop through each byte and generate characters for the password
     for (let i = 0; i < length; i++) {
-      // Use modulo to ensure the random byte falls within the range of the charset
-      generatedPassword += charset[randomBytes[i] % charset.length]; // Append characters from charset to generate password
+      generatedPassword += charset[randomBytes[i] % charset.length];
     }
 
-    setPassword(generatedPassword); // Update password state
-    calculateEntropy(length); // Recalculate entropy of generated password
+    setPassword(generatedPassword);
+    calculateEntropy(length);
   };
-
 
   // Function to copy the password to the clipboard
   const copyToClipboard = () => {
@@ -96,6 +89,6 @@ const PasswordGenerator = () => {
       {showMessage && <div>Password copied to clipboard!</div>}
     </div>
   );
-};
+}
 
-export default PasswordGenerator;
+export default App;
