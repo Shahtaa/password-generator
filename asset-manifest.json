@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/password-generator/static/css/main.055bea42.css",
-    "main.js": "/password-generator/static/js/main.e1dc68cd.js",
+    "main.css": "/password-generator/static/css/main.3215b8ef.css",
+    "main.js": "/password-generator/static/js/main.8d6c82e7.js",
     "static/media/fira-code-latin-400-normal.woff": "/password-generator/static/media/fira-code-latin-400-normal.f6c6f117610544fb0dc1.woff",
     "static/media/fira-code-latin-400-normal.woff2": "/password-generator/static/media/fira-code-latin-400-normal.602eb93fcc55fbc80a4f.woff2",
     "static/media/fira-code-cyrillic-ext-400-normal.woff": "/password-generator/static/media/fira-code-cyrillic-ext-400-normal.540023a9b46a9d831de2.woff",
@@ -15,11 +15,11 @@
     "static/media/fira-code-cyrillic-400-normal.woff2": "/password-generator/static/media/fira-code-cyrillic-400-normal.e1e9e3ed08af5b50de41.woff2",
     "static/media/fira-code-greek-ext-400-normal.woff2": "/password-generator/static/media/fira-code-greek-ext-400-normal.4d56ea953041d06820e2.woff2",
     "index.html": "/password-generator/index.html",
-    "main.055bea42.css.map": "/password-generator/static/css/main.055bea42.css.map",
-    "main.e1dc68cd.js.map": "/password-generator/static/js/main.e1dc68cd.js.map"
+    "main.3215b8ef.css.map": "/password-generator/static/css/main.3215b8ef.css.map",
+    "main.8d6c82e7.js.map": "/password-generator/static/js/main.8d6c82e7.js.map"
   },
   "entrypoints": [
-    "static/css/main.055bea42.css",
-    "static/js/main.e1dc68cd.js"
+    "static/css/main.3215b8ef.css",
+    "static/js/main.8d6c82e7.js"
   ]
 }
