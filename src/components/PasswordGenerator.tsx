@@ -5,7 +5,7 @@ import PasswordLengthInput from './PasswordLengthInput';
 import PasswordDisplay from './PasswordDisplay';
 import CharacterOptions from './CharacterOptions';
 import Footer from './Footer';
-import SnackbarError from './SnackbarError';
+import SnackbarMessage from './SnackbarMessage'; // Updated import
 
 const PasswordGenerator: React.FC = () => {
     const [password, setPassword] = useState<string>('');
@@ -16,6 +16,8 @@ const PasswordGenerator: React.FC = () => {
     const [includeLowercase, setIncludeLowercase] = useState<boolean>(true);
     const [includeNumbers, setIncludeNumbers] = useState<boolean>(true);
     const [includeSymbols, setIncludeSymbols] = useState<boolean>(true);
+    const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
 
     const generatePassword = () => {
         const charset =
@@ -26,6 +28,8 @@ const PasswordGenerator: React.FC = () => {
 
         if (charset.length === 0) {
             setShowError(true);
+            setSnackbarMessage('Please select at least one character type!');
+            setSnackbarSeverity('error');
             return;
         }
 
@@ -41,13 +45,16 @@ const PasswordGenerator: React.FC = () => {
         if (password) {
             navigator.clipboard.writeText(password).then(() => {
                 setShowMessage(true);
+                setSnackbarMessage('Password copied to clipboard!');
+                setSnackbarSeverity('success');
                 setTimeout(() => setShowMessage(false), 6000);
             });
         }
     };
 
-    const handleCloseError = () => {
+    const handleCloseSnackbar = () => {
         setShowError(false);
+        setShowMessage(false);
     };
 
     return (
@@ -81,7 +88,12 @@ const PasswordGenerator: React.FC = () => {
                 </Paper>
                 <Footer />
             </Container>
-            <SnackbarError open={showError} onClose={handleCloseError} />
+            <SnackbarMessage
+                open={showError || showMessage}
+                onClose={handleCloseSnackbar}
+                message={snackbarMessage}
+                severity={snackbarSeverity}
+            />
         </>
     );
 };
