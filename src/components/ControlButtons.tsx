@@ -17,6 +17,7 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({ generatePassword }) => 
                 startIcon={<VpnKeyIcon />} // Icon for the button
                 onClick={generatePassword} // Trigger password generation on click
                 fullWidth
+                sx={{ borderRadius: '8px' }} // Rounded corners for a modern look
             >
                 Generate Password
             </Button>
