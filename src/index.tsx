@@ -1,19 +1,19 @@
+// src/index.tsx
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import { createRoot } from 'react-dom/client'; // Import createRoot
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import '@fontsource/fira-code'; // Import Fira Code font
+import './index.css'; // Your global styles
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+// Get the root element
+const container = document.getElementById('root');
+
+// Create a root
+const root = createRoot(container!); // Using TypeScript, the '!' operator is used to assert that the container is not null
+
+// Render the app
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
