@@ -1,10 +1,11 @@
 /* src/styles/global.css */
+
 html, body {
   height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f9f9f9; /* Light background for a minimalist look */
+  background: linear-gradient(to bottom, #D7DAC6, #C2BEB5); /* Example using earth tones */
   color: #333; /* Dark text for readability */
 }
 
@@ -20,6 +21,7 @@ footer {
   margin-top: auto; /* Push footer to the bottom */
   padding: 16px; /* Add padding for better spacing */
   text-align: center; /* Center the footer text */
+  background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
 }
 
 /* Additional styling for headers and paragraphs */
@@ -39,4 +41,16 @@ a {
 
 a:hover {
   text-decoration: underline; /* Add underline on hover */
+}
+
+/* Optional: Style for buttons and input fields to match the new background */
+button, input {
+  background-color: #ffffff; /* White background for buttons and inputs */
+  border: 1px solid #cccccc; /* Light border for inputs */
+  border-radius: 4px; /* Slightly rounded corners */
+  padding: 8px; /* Consistent padding */
+}
+
+button:hover, input:hover {
+  border-color: #007bff; /* Change border color on hover */
 }
