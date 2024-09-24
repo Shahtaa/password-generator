@@ -1,34 +1,45 @@
-// src/components/PasswordDisplay.tsx
 import React from 'react';
 import { TextField, IconButton, InputAdornment, Typography, Box } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 interface PasswordDisplayProps {
-    password: string; // The generated password
-    copyToClipboard: () => void; // Function to copy password to clipboard
-    showMessage: boolean; // Flag to show/hide copy message
-    generatePassword: () => void; // Function to generate a new password
+    password: string;               // The generated password to be displayed
+    copyToClipboard: () => void;    // Function to copy the password to clipboard
+    showMessage: boolean;            // Flag to show the success message
+    generatePassword: () => void;    // Function to generate a new password
 }
 
-// Component to display the generated password and copy/regenerate buttons
-const PasswordDisplay: React.FC<PasswordDisplayProps> = ({ password, copyToClipboard, showMessage, generatePassword }) => {
+const PasswordDisplay: React.FC<PasswordDisplayProps> = ({
+                                                             password,
+                                                             copyToClipboard,
+                                                             showMessage,
+                                                             generatePassword
+                                                         }) => {
     return (
-        <Box mt={2}>
+        <Box mt={3}>
+            <Typography variant="h6" gutterBottom>
+                Generated Password:
+            </Typography>
             <TextField
-                label="Generated Password"
+                label="Your Password"
                 variant="outlined"
-                value={password} // Display the generated password
+                value={password}
                 fullWidth
+                name="generatedPassword"
+                inputProps={{
+                    readOnly: true,
+                    'aria-label': 'Generated Password',
+                    style: { backgroundColor: '#f9f9f9' }, // Light background for the password field
+                }}
                 InputProps={{
-                    readOnly: true, // Make the input read-only
                     endAdornment: (
                         <InputAdornment position="end">
                             <IconButton onClick={copyToClipboard} aria-label="Copy password">
-                                <ContentCopyIcon /> {/* Icon for copying password */}
+                                <ContentCopyIcon />
                             </IconButton>
                             <IconButton onClick={generatePassword} aria-label="Generate new password">
-                                <RefreshIcon /> {/* Icon for regenerating password */}
+                                <RefreshIcon />
                             </IconButton>
                         </InputAdornment>
                     ),
@@ -36,7 +47,7 @@ const PasswordDisplay: React.FC<PasswordDisplayProps> = ({ password, copyToClipb
             />
             {showMessage && (
                 <Typography variant="body2" color="success.main" align="center" style={{ marginTop: '10px' }}>
-                    Password copied to clipboard! {/* Confirmation message */}
+                    Password copied to clipboard!
                 </Typography>
             )}
         </Box>

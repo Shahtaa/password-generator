@@ -4,61 +4,103 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Container, Paper, Typography } from '@mui/material';
 import PasswordLengthInput from './components/PasswordLengthInput';
 import PasswordDisplay from './components/PasswordDisplay';
-import '@fontsource/fira-code'; // Correctly imported Fira Code font
+import CharacterOptions from './components/CharacterOptions';
+import '@fontsource/fira-code';
 
-// Create a theme with Fira Code font
 const theme = createTheme({
   typography: {
     fontFamily: "'Fira Code', monospace",
+    h4: {
+      fontSize: '2rem', // Larger size for main heading
+      fontWeight: 700, // Bold for emphasis
+    },
+    h6: {
+      fontSize: '1.2rem', // Size for subheadings
+      fontWeight: 600,
+    },
+    body1: {
+      fontSize: '1rem', // General body text size
+    },
+  },
+  palette: {
+    primary: {
+      main: '#3f51b5', // Primary color for buttons and accents
+    },
+    success: {
+      main: '#4caf50', // Green color for success messages
+    },
+    text: {
+      primary: '#333', // Dark text for readability
+      secondary: '#555', // Secondary text color
+    },
   },
 });
 
-// Main App component
 const App: React.FC = () => {
-  const [password, setPassword] = useState<string>(''); // State for the generated password
-  const [passwordLength, setPasswordLength] = useState<number>(12); // Default password length
-  const [showMessage, setShowMessage] = useState<boolean>(false); // Message state for clipboard copy
+  const [password, setPassword] = useState<string>('');
+  const [passwordLength, setPasswordLength] = useState<number>(12);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
+  const [includeUppercase, setIncludeUppercase] = useState<boolean>(true);
+  const [includeLowercase, setIncludeLowercase] = useState<boolean>(true);
+  const [includeNumbers, setIncludeNumbers] = useState<boolean>(true);
+  const [includeSymbols, setIncludeSymbols] = useState<boolean>(true);
 
-  // Function to generate a random password
   const generatePassword = () => {
-    const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+'; // Characters to use in password
+    const charset =
+        (includeUppercase ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '') +
+        (includeLowercase ? 'abcdefghijklmnopqrstuvwxyz' : '') +
+        (includeNumbers ? '0123456789' : '') +
+        (includeSymbols ? '!@#$%^&*()-_=+' : '');
+
+    if (charset.length === 0) {
+      alert('Please select at least one character type!');
+      return;
+    }
+
     let generatedPassword = '';
     for (let i = 0; i < passwordLength; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length); // Get random index
-      generatedPassword += charset[randomIndex]; // Add random character to password
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      generatedPassword += charset[randomIndex];
     }
-    setPassword(generatedPassword); // Update the password state
+    setPassword(generatedPassword);
   };
 
-  // Function to copy the generated password to the clipboard
   const copyToClipboard = () => {
     if (password) {
       navigator.clipboard.writeText(password).then(() => {
-        setShowMessage(true); // Show success message
-        setTimeout(() => setShowMessage(false), 2000); // Hide message after 2 seconds
+        setShowMessage(true);
+        setTimeout(() => setShowMessage(false), 2000);
       });
     }
   };
 
   return (
       <ThemeProvider theme={theme}>
-        <Container maxWidth="sm" style={{ marginTop: '50px' }}>
+        <Container maxWidth="sm" style={{ marginTop: '50px', padding: '20px' }}>
           <Paper elevation={3} style={{ padding: '20px' }}>
             <Typography variant="h4" align="center" gutterBottom>
-              Password Generator
+              Secure Password Generator
             </Typography>
-            {/* Password length input */}
             <PasswordLengthInput
                 passwordLength={passwordLength}
                 setPasswordLength={setPasswordLength}
-                generatePassword={generatePassword} // Pass the function to generate password
+                generatePassword={generatePassword}
             />
-            {/* Password display with copy and generate buttons */}
+            <CharacterOptions
+                includeUppercase={includeUppercase}
+                setIncludeUppercase={setIncludeUppercase}
+                includeLowercase={includeLowercase}
+                setIncludeLowercase={setIncludeLowercase}
+                includeNumbers={includeNumbers}
+                setIncludeNumbers={setIncludeNumbers}
+                includeSymbols={includeSymbols}
+                setIncludeSymbols={setIncludeSymbols}
+            />
             <PasswordDisplay
                 password={password}
                 copyToClipboard={copyToClipboard}
                 showMessage={showMessage}
-                generatePassword={generatePassword} // Pass the function to regenerate password
+                generatePassword={generatePassword}
             />
           </Paper>
         </Container>
