@@ -1,5 +1,14 @@
+// src/components/PasswordDisplay.tsx
 import React from 'react';
-import { TextField, IconButton, InputAdornment, Typography, Box } from '@mui/material';
+import {
+    TextField,
+    IconButton,
+    InputAdornment,
+    Typography,
+    Box,
+    Snackbar,
+    Alert
+} from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
@@ -45,11 +54,16 @@ const PasswordDisplay: React.FC<PasswordDisplayProps> = ({
                     ),
                 }}
             />
-            {showMessage && (
-                <Typography variant="body2" color="success.main" align="center" style={{ marginTop: '10px' }}>
+            <Snackbar
+                open={showMessage}
+                autoHideDuration={6000}
+                onClose={() => {}}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={() => {}} severity="success" variant="filled">
                     Password copied to clipboard!
-                </Typography>
-            )}
+                </Alert>
+            </Snackbar>
         </Box>
     );
 };
